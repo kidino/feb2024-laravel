@@ -13,45 +13,66 @@
 
     <div class="row">
         <div class="col-6">
+
+            {{ $errors }}
+
             <form action="{{ route('contact') }}" method="post">
 
                 @csrf
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name">
+                    <input type="text" name="name" 
+                    class="form-control @error('name') is-invalid @enderror" 
+                    id="name" placeholder="Your Name" />
+                    @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" name="email" 
+                    class="form-control @error('email') is-invalid @enderror" 
+                    id="email" placeholder="name@example.com">
+                    @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone" name="phone" placeholder="60123344555">
+                    <input type="text" 
+                    class="form-control @error('phone') is-invalid @enderror" 
+                    id="phone" name="phone" placeholder="+6012-334 4555">
+                    @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Message for us</label>
-                    <textarea class="form-control" id="message" name="message" rows="5"></textarea>
+                    <textarea class="form-control @error('message') is-invalid @enderror" 
+                    id="message" name="message" rows="5"></textarea>
+                    @error('message') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div>
-                    <input type="checkbox" name="checkbox[]" value="ali" id=""> ali
+                    <input type="checkbox" name="officers[]" value="ali" id="ali">
+                    <label for="ali">ali</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" name="checkbox[]" value="siti" id=""> siti
+                    <input type="checkbox" name="officers[]" value="siti" id="siti">
+                    <label for="siti">siti</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" name="checkbox[]" value="atan" id=""> atan
+                    <input type="checkbox" name="officers[]" value="atan" id="atan"> 
+                    <label for="atan">atan</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" name="checkbox[]" value="minah" id=""> minah
+                    <input type="checkbox" name="officers[]" value="minah" id="minah"> 
+                    <label for="minah">minah</label>
+
                 </div>
 
                 <div>
-                    <input type="checkbox" name="checkbox[]" value="ah chong" id=""> ah chong
+                    <input type="checkbox" name="officers[]" value="ah chong" id="ah-chong">  
+                    <label for="ah-chong">ah chong</label>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

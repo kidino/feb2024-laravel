@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactRecord;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -44,11 +45,36 @@ class PageController extends Controller
 
         // dd($request);
 
-        echo "name : " . $request->input("name") .'<br>';
-        echo "email : " . $request->input("email") .'<br>';
-        echo "phone : " . $request->input("phone") .'<br>';
-        echo "message : " . $request->input("message") .'<br>';
-    }
+        // echo "name : " . $request->input("name") .'<br>';
+        // echo "email : " . $request->input("email") .'<br>';
+        // echo "phone : " . $request->input("phone") .'<br>';
+        // echo "message : " . $request->input("message") .'<br>';
+        // echo "officer : ";
+        // print_r( $request->input("officer") );
+        // echo '<br>';
 
+
+        $validation_rule = [
+            "name"=> "required|min:5|max:255",
+            "email" => "required|email:dns",
+            "phone" => "regex:/^\+\d{4}-\d{3}\s?\d{4}$/i",
+            "message" => "required"
+        ];
+
+        $validated_data = $request->validate(  $validation_rule );
+
+        $validated_data['officers'] = json_encode( $request->input('officers') );
+
+        // dd($validated_data);
+
+        $new_record = ContactRecord::create( $validated_data ); 
+
+        echo "success";
+
+        print_r($new_record);
+
+
+
+    }
 
 }
