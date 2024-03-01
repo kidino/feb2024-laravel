@@ -14,6 +14,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Role::class);
+
+
         $roles = Role::all();  // Fetch all roles from the database
         return view('role.index', compact('roles'));
     }
@@ -23,6 +26,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
+
         return view('role.create');
     }
 
@@ -31,6 +36,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Role::class);
+
+
         // Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|unique:roles|max:20',
@@ -61,6 +69,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', $role);
+
         return view('role.edit', compact('role'));
     }
     
@@ -76,6 +86,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $this->authorize('update', $role);
+
         // Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|max:20|unique:roles,name,' . $role->id, // Ensure the name is unique except for the current role
@@ -96,6 +108,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+
+        $role->delete();
+        return redirect()->route('roles.index')->with('success','Role has been deleted');
     }
 }

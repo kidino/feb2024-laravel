@@ -19,7 +19,7 @@
 
         @if(session('success'))
             <div class="bg-green-500 text-white px-4 py-2 mb-4 rounded">
-                {{!! session('success') !!}}
+                {!! session('success') !!}
             </div>
         @endif  
 
@@ -44,6 +44,15 @@
                             <td class="py-2 px-4 border-b">{{ $role->description }}</td>
                             <td class="py-2 px-4 border-b">
                                 <a href="{{ route('roles.edit', $role->id) }}" class="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700 focus:outline-none focus:shadow-outline-yellow active:bg-yellow-800">Edit</a>
+
+                                <form method="post" action="{{ route('roles.destroy', $role->id) }}">
+                                    @csrf 
+                                    @method('delete')
+
+                                <x-primary-button>{{ __('Delete') }}</x-primary-button>
+
+                                </form>
+
                             </td>
                         </tr>
                     @endforeach
